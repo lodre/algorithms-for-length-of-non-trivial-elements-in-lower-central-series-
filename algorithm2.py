@@ -9,14 +9,19 @@ for _ in range(li-1):
     for x in lt:
         for c in ["a","b","c","d"]:
             if gg[c]!=x[len(x)-1]:
-                lr.append(x+c)
+                y = x+c
+                if (max(y.count("a")+y.count("b"),y.count("c")+y.count("d"))<=li//2):
+                    lr.append(y)
     lt = lr
 ltt = [list(x) for x in lt]
+count = 0
+fast = {}
+for i in range(10+2*li):
+    fast[i] = {"":{"":1}}
 for s in lt:
     n = 2
     b = True
     while(b):
-        fast = {}
         g = {'a': {},'b': {},'c': {},'d': {}}
         g['a'][""] = 1
         g['a']["x"] = 1
@@ -37,24 +42,23 @@ for s in lt:
                         d[s1+s2] = d.get(s1+s2, 0) + dict1[s1]*dict2[s2]
             return d
         def f(l,s,st):
-            i = 1
-            while(s[:i] in fast.keys()):
-                i+=1
-                if i>len(s):
-                    break
-            i-=1
+            i = len(s)
+            while(s[:i] not in fast[n].keys()):
+                i-=1
             s1 = s[:i]
             if s1!="":
-                l = mul(l,fast[s1])
+                l = mul(l,fast[n][s1])
             s = s[i:]
             if s == "":
                 return l
             else:
+                st = st+s1
                 c = s[0]
                 ss = s[1:]
                 a = g[c]
-                ll = mul(a,l)
-                fast[st] = l
+                ll = mul(l,a)
+                if len(s)<=li//2:
+                    fast[n][st] = l
                 return f(ll,ss,st+c)
         l = f({"":1},s,"")
         sum = 0
@@ -65,7 +69,7 @@ for s in lt:
         else:
             b = False
         n+=1
-        if (n>5):
+        if (n>20):
             n = 0
             break
     if n-2 == m:
