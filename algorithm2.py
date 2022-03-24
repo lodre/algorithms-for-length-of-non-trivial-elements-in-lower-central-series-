@@ -1,10 +1,10 @@
 
 li = int(input("Вести поиск по словам длины: "))
-lt = ["a","b","c","d"]
+lt = ["aa","ab"]
 m = 0
 sr = []
 gg = {"a":"c","b":"d","c":"a","d":"b"}
-for _ in range(li-1):
+for _ in range(li-2):
     lr = []
     for x in lt:
         for c in ["a","b","c","d"]:
